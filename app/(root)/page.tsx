@@ -1,17 +1,18 @@
-
-import Search from "@/components/Search"
-const HomePage = () => {
+import SearchForm from "@/components/SearchForm"
+const page = () => {
   return (
-    <>
-      <section className='bg-[hsl(178,26%,21%)] flex w-full min-h-132.5 pattern justify-center items-center flex-col py-10 px-6'>
-        <h1 className='bg-[hsl(168,20%,15%)] px-6 py-3 font-extrabold text-white  sm:text-[54px] sm:leading-16 text-[36px] leading-11.5 max-w-5xl text-center my-5 border-2 border-white rounded-4xl'>PITCH YOUR STARTUP, <br/> CONNECT WITH ENTREPRENEURS</h1>
-         <p className='text-white text-lg mb-4 text-center'>
-        Submit Ideas, Vote on Pitches, and Get Noticed in Virtual Competitions
-       </p>
-       <Search/>
+    <main className='border-2 h-120 border-amber-400 w-full bg-[#4244]'>
+      <section className='items-center flex justify-center min-h-120 w-full mx-auto flex-col'>
+        <div className='max-w-7xl px-14 py-10 items-center justify-center flex bg-black uppercase'>
+          <h1 className='text-white text-4xl'>Lets connect our soul to start, <br/> from the scratch</h1>
+        </div>
+          <p className='my-7 text-2xl'>
+          You don’t have to be great to start, but you have to start to be great.
+        </p>
+        <SearchForm/>
       </section>
-    </>
+    </main>
   )
 }
 
-export default HomePage
+export default page
