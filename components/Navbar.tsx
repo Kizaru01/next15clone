@@ -8,7 +8,7 @@ const Navbar = async () => {
 
   return (
     <header className='w-full bg-[hsl(0,3%,70%)]'>
-      <div className="w-full max-w-7xl mx-auto flex justify-between items-center py-8 px-6">
+      <div className="w-full max-w-7xl mx-auto flex justify-between items-center py-6 px-4">
         <Link href='/'>
             <Image 
                 src="/logo.png"
