@@ -1,26 +1,35 @@
 import Form from "next/form";
+import { Search } from "lucide-react";
+
 import SearchFormReset from "@/components/SearchFormReset";
-import {Search} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const SearchForm = ({ query }: { query?: string }) => {
-    return (
-        <Form action="/" scroll={false} className="max-w-3xl w-full min-h-[80px] bg-white border-[5px] border-black rounded-[80px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5">
-            <input
-                name="query"
-                defaultValue={query}
-                className="flex-1 font-bold placeholder:font-semibold placeholder:text-black w-full h-auto outline-none"
-                placeholder="Search Startups"
-            />
+  return (
+    <Form action="/" scroll={false} className="search-form">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <div className="hidden size-11 items-center justify-center rounded-2xl bg-secondary text-muted-foreground sm:flex">
+          <Search className="size-5" />
+        </div>
 
-            <div className="flex gap-2">
-                {query && <SearchFormReset />}
+        <input
+          name="query"
+          defaultValue={query}
+          className="search-input"
+          placeholder="Search startups"
+        />
+      </div>
 
-                <button type="submit" className="size-12.5 rounded-full bg-black flex justify-center items-center text-white">
-                    <Search className="size-5" />
-                </button>
-            </div>
-        </Form>
-    )
-}
+      <div className="flex items-center gap-2">
+        {query ? <SearchFormReset /> : null}
 
-export default SearchForm
+        <Button type="submit" size="icon-lg" className="rounded-2xl">
+          <Search className="size-5" />
+          <span className="sr-only">Search startups</span>
+        </Button>
+      </div>
+    </Form>
+  );
+};
+
+export default SearchForm;
