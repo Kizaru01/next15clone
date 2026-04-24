@@ -32,13 +32,15 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
       <section className="section-shell pb-0">
         <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-xl ring-1 ring-black/5">
-          <Image
-            src={posts?.image}
-            alt={posts.author.name}
-            height={400}
-            width={400}
-            className="h-auto max-h-[620px] w-full object-cover"
-          />
+          {posts.image && (
+            <Image
+              src={posts.image}
+              alt={posts.title ?? "Startup image"}
+              height={400}
+              width={400}
+              className="h-auto max-h-[620px] w-full object-cover"
+            />
+          )}
         </div>
       </section>
 
