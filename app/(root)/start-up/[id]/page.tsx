@@ -12,7 +12,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <main className="pb-16">
-      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 pb-0">
+      <section className="section-shell pb-0">
         <div className="surface-panel relative overflow-hidden px-6 py-10 sm:px-10 sm:py-14">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(15,23,42,0.06),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(15,23,42,0.05),transparent_32%)]" />
 
@@ -42,53 +42,46 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </section>
 
-      <section className="section-shell">
+      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
-          <Link
-            href={`/user/${posts.author?._id}`}
-            className="surface-panel flex items-center gap-4 p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl"
-          >
-            <Image
-              src={posts.author.image}
-              alt={posts.author.name}
-              width={200}
-              height={200}
-              className="h-16 w-16 rounded-2xl object-cover ring-1 ring-black/5"
-            />
+                <Link
+                    href={`/user/${posts.author?._id}`}
+                    className="rounded-[1.75rem] border border-black/5 bg-white/80 shadow-lg ring-1 ring-black/5 backdrop-blur flex items-center gap-4 p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl"
+                >
+                    <Image
+                    src={posts.author.image}
+                    alt={posts.author.name}
+                    width={200}
+                    height={200}
+                    className="h-16 w-16 rounded-2xl object-cover ring-1 ring-black/5"
+                    />
 
-            <div className="min-w-0">
-              <p className="mt-2 truncate text-2xl font-semibold tracking-tight text-foreground">
-                {posts.author.name}
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                @{posts.author.username}
-              </p>
-            </div>
-          </Link>
-
-          <div className="surface-panel flex items-center justify-between gap-4 p-5 lg:min-w-[260px]">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                Category
-              </p>
-              <p className="mt-2 text-lg font-semibold text-foreground">
-                {posts.category}
-              </p>
-            </div>
-
-            <span
-              className={cn(
-                buttonVariants({ variant: "outline", size: "sm" }),
-                "pointer-events-none"
-              )}
-            >
-              {posts.category}
-            </span>
-          </div>
+                    <div className="min-w-0">
+                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                            Founder
+                        </p>
+                        <p className="mt-2 truncate text-2xl font-semibold tracking-tight text-foreground">
+                            {posts.author.name}
+                        </p>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                            @{posts.author.username}
+                        </p>
+                    </div>
+                    <span
+                    className={cn(
+                        buttonVariants({ variant: "outline", size: "sm" }),
+                        "pointer-events-none absolute top-10 right-5"
+                    )}
+                    >
+                    {posts.category}
+                    </span>
+                </Link>
+                
         </div>
       </section>
     </main>
   );
 };
 
-export default page;
+
+export default page
