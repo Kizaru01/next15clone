@@ -3,6 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
 
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border text-sm font-medium whitespace-nowrap transition duration-200 ease-out outline-none select-none focus-visible:ring-4 focus-visible:ring-ring/20 focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -63,4 +64,18 @@ function Button({
   );
 }
 
-export { Button, buttonVariants };
+function ButtonSkeleton({
+  className,
+  size = "default",
+}: {
+  className?: string;
+  size?: VariantProps<typeof buttonVariants>["size"];
+}) {
+  return (
+    <Skeleton
+      className={cn(buttonVariants({ variant: "secondary", size }), className)}
+    />
+  );
+}
+
+export { Button, ButtonSkeleton, buttonVariants };

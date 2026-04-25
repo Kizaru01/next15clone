@@ -2,7 +2,8 @@ import Form from "next/form";
 import { Search } from "lucide-react";
 
 import SearchFormReset from "@/components/SearchFormReset";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonSkeleton } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const SearchForm = ({ query }: { query?: string }) => {
   return (
@@ -32,4 +33,21 @@ const SearchForm = ({ query }: { query?: string }) => {
   );
 };
 
+const SearchFormSkeleton = () => {
+  return (
+    <div className="search-form" aria-hidden="true">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <Skeleton className="hidden size-11 rounded-2xl sm:block" />
+        <Skeleton className="h-14 flex-1 rounded-2xl" />
+      </div>
+
+      <div className="flex items-center gap-2">
+        <ButtonSkeleton size="icon-lg" className="rounded-2xl bg-white/90" />
+        <ButtonSkeleton size="icon-lg" className="rounded-2xl" />
+      </div>
+    </div>
+  );
+};
+
+export { SearchFormSkeleton };
 export default SearchForm;

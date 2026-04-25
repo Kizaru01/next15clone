@@ -1,8 +1,70 @@
+import { Suspense } from "react";
+
+import { StartupFeedSkeleton } from "@/components/PageSkeletons";
 import Particles from "@/components/Particles";
 import SearchForm from "@/components/SearchForm";
 import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { StartUpQuery } from "@/sanity/lib/query";
+
+const StartupFeed = async ({ query }: { query?: string }) => {
+  const params = { search: query || null };
+
+  const { data: posts } = await sanityFetch({
+    query: StartUpQuery,
+    params,
+  });
+
+  return (
+    <section className="section-shell pt-0 sm:pt-2">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-3">
+          <span className="page-label">Community directory</span>
+
+          <div className="space-y-2">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              {query ? `Search results for "${query}"` : "All Startups"}
+            </h2>
+
+            <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">
+              {query
+                ? `Showing founders and products related to "${query}".`
+                : "A curated feed of founders, startup ideas, and community projects."}
+            </p>
+          </div>
+        </div>
+
+        <div className="surface-panel flex items-center gap-3 px-4 py-3">
+          <span className="text-sm font-medium text-muted-foreground">
+            Results
+          </span>
+          <span className="text-2xl font-semibold tracking-tight text-foreground">
+            {posts.length}
+          </span>
+        </div>
+      </div>
+
+      {posts.length > 0 ? (
+        <ul className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {posts.map((post: StartupTypeCard) => (
+            <StartupCard key={post._id} post={post} />
+          ))}
+        </ul>
+      ) : (
+        <div className="surface-panel mt-8 flex min-h-60 items-center justify-center px-6 py-12 text-center">
+          <div className="max-w-md space-y-3">
+            <p className="text-xl font-semibold text-foreground">
+              No startups found
+            </p>
+            <p className="text-muted-foreground">
+              Try a broader keyword or clear the current search.
+            </p>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
 
 const page = async ({
   searchParams,
@@ -10,12 +72,6 @@ const page = async ({
   searchParams: Promise<{ query?: string }>;
 }) => {
   const query = (await searchParams).query;
-  const params = { search: query || null };
-
-  const { data: posts } = await sanityFetch({
-    query: StartUpQuery,
-    params,
-  });
 
   return (
     <main className="relative flex flex-1 flex-col pb-16">
@@ -61,53 +117,9 @@ const page = async ({
         </div>
       </section>
 
-      <section className="section-shell pt-0 sm:pt-2">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="space-y-3">
-            <span className="page-label">Community directory</span>
-
-            <div className="space-y-2">
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                {query ? `Search results for "${query}"` : "All Startups"}
-              </h2>
-
-              <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">
-                {query
-                  ? `Showing founders and products related to "${query}".`
-                  : "A curated feed of founders, startup ideas, and community projects."}
-              </p>
-            </div>
-          </div>
-
-          <div className="surface-panel flex items-center gap-3 px-4 py-3">
-            <span className="text-sm font-medium text-muted-foreground">
-              Results
-            </span>
-            <span className="text-2xl font-semibold tracking-tight text-foreground">
-              {posts.length}
-            </span>
-          </div>
-        </div>
-
-        {posts.length > 0 ? (
-          <ul className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {posts.map((post: StartupTypeCard) => (
-              <StartupCard key={post._id} post={post} />
-            ))}
-          </ul>
-        ) : (
-          <div className="surface-panel mt-8 flex min-h-60 items-center justify-center px-6 py-12 text-center">
-            <div className="max-w-md space-y-3">
-              <p className="text-xl font-semibold text-foreground">
-                No startups found
-              </p>
-              <p className="text-muted-foreground">
-                Try a broader keyword or clear the current search.
-              </p>
-            </div>
-          </div>
-        )}
-      </section>
+      <Suspense key={query ?? "all"} fallback={<StartupFeedSkeleton />}>
+        <StartupFeed query={query} />
+      </Suspense>
 
       <SanityLive />
     </main>

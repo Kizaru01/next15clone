@@ -12,7 +12,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <main className="pb-16">
-      <section className="section-shell pb-0">
+      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 pb-0">
         <div className="surface-panel relative overflow-hidden px-6 py-10 sm:px-10 sm:py-14">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(15,23,42,0.06),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(15,23,42,0.05),transparent_32%)]" />
 
