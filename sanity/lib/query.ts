@@ -34,3 +34,8 @@ export const StartUpQueryId =
         image,
         pitch
 }`);
+
+export const STARTUP_VIEWS = defineQuery(
+    `*[
+    _type == "startup" && _id == $id][0]{_id, views}`
+)

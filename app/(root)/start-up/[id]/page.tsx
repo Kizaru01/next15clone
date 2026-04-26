@@ -5,11 +5,16 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn, formartDate } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { StartUpQueryId } from "@/sanity/lib/query";
+import markdownit from 'markdown-it'
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import View from "@/components/View";
 
+const md = markdownit();
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
   const posts = await client.fetch(StartUpQueryId, { id });
-
+  const parsedContent = md.render(posts?.pitch || '')
   return (
     <main className="pb-16">
       <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 pb-0">
@@ -46,41 +51,55 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
       <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
-                <Link
-                    href={`/user/${posts.author?._id}`}
-                    className="rounded-[1.75rem] border border-black/5 bg-white/80 shadow-lg ring-1 ring-black/5 backdrop-blur flex items-center gap-4 p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl"
-                >
-                    <Image
-                    src={posts.author.image}
-                    alt={posts.author.name}
-                    width={200}
-                    height={200}
-                    className="h-16 w-16 rounded-2xl object-cover ring-1 ring-black/5"
-                    />
+          <Link
+              href={`/user/${posts.author?._id}`}
+              className="rounded-[1.75rem] border border-black/5 bg-white/80 shadow-lg ring-1 ring-black/5 backdrop-blur flex items-center gap-4 p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl"
+          >
+              <Image
+              src={posts.author.image}
+              alt={posts.author.name}
+              width={200}
+              height={200}
+              className="h-16 w-16 rounded-2xl object-cover ring-1 ring-black/5"
+              />
 
-                    <div className="min-w-0">
-                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                            Founder
-                        </p>
-                        <p className="mt-2 truncate text-2xl font-semibold tracking-tight text-foreground">
-                            {posts.author.name}
-                        </p>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                            @{posts.author.username}
-                        </p>
-                    </div>
-                    <span
-                    className={cn(
-                        buttonVariants({ variant: "outline", size: "sm" }),
-                        "pointer-events-none absolute top-10 right-5"
-                    )}
-                    >
-                    {posts.category}
-                    </span>
-                </Link>
-                
+              <div className="min-w-0">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      Founder
+                  </p>
+                  <p className="mt-2 truncate text-2xl font-semibold tracking-tight text-foreground">
+                      {posts.author.name}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                      @{posts.author.username}
+                  </p>
+              </div>
+              <span
+              className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                  "pointer-events-none absolute top-10 right-5"
+              )}
+              >
+              {posts.category}
+              </span>
+          </Link>
         </div>
+        <h3 className="text-4xl font-bold mt-4 ml-2 ">
+          Pitch Details
+        </h3>
+        {parsedContent ? (
+          <article className="mt-4 ml-6 p max-w-4xl break-all"
+            dangerouslySetInnerHTML={{ __html: parsedContent}}
+          />
+        ) : (
+          <p className="text-black text-sm font-normal">No details provided</p>
+        )}
       </section>
+      <hr className="border-dotted bg-zinc-400 max-w-4xl my-10 mx-auto"/>
+
+      <Suspense fallback={<Skeleton className="view-skeleton"/>}>
+        <View id={id}/>
+      </Suspense>
     </main>
   );
 };

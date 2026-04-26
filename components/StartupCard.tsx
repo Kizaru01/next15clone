@@ -23,7 +23,7 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
 
   return (
     <li className="group list-none">
-      <article className="flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-black/5 bg-white/90 p-5 shadow-lg ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl">
+      <article className="flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-black/5 bg-white/90 p-5 shadow-amber-800 ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl">
         <div className="flex items-center justify-between gap-3 text-sm text-muted-foreground">
           <p className="rounded-full bg-secondary px-3 py-1 font-medium text-foreground/70">
             {formartDate(_createdAt)}
