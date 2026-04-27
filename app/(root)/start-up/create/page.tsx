@@ -1,3 +1,5 @@
+import StartupForm from "@/components/StartupForm";
+
 const page = () => {
   return (
     <main className="section-shell flex flex-1 items-center justify-center">
@@ -12,6 +14,8 @@ const page = () => {
           This route now uses the same layout shell, spacing, and typography as
           the rest of the application.
         </p>
+        
+      <StartupForm />
       </div>
     </main>
   );

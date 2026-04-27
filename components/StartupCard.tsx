@@ -50,7 +50,7 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
             </Link>
           </div>
 
-          <Link href={`/user/${_id}`}>
+          <Link href={`/user/${author?._id}`}>
             <Image
               src={author?.image ?? ""}
               alt={author?.name ?? ""}
